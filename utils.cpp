@@ -70,24 +70,29 @@ void forward_selection(const Problem& p, double initial_score){
 }
 
 void backward_elimination(const Problem& p, double initial_score){
-    std::vector<int> selected;
+    std::vector<int> selected, remain;
     std::vector<int>::iterator best_it;
     double score = 0;
     double best_score = initial_score;
     for(int i=1; i<p.get()+1; ++i){
         selected.push_back(i);
     }
-    
+    remain = selected;
     while(selected.size() > 0) {
-        for (const auto& x : selected) {
-            std::cout << x << " ";
-        }
-        std::cout << std::endl;
-        best_it = selected.begin();
+        best_it = remain.begin();
         score = 0;
-        for(auto it = selected.begin(); it != selected.end(); ++it) {
-            //can have the evaluate function erase feature if negative since it technically copies the vector then
-            double s = evaluate(selected, -(*it));
+        for(auto it = remain.begin(); it != remain.end(); ++it) {
+            remain = selected;
+            remain.erase(it);
+            double s = evaluate(remain, 0);
+            std::cout << "Using feature(s) {";
+            for(size_t k=0; k<remain.size(); ++k) {
+                if (k+1 >= remain.size())
+                    std::cout << remain[k];
+                else
+                    std::cout << remain[k] << ",";
+            }
+            std::cout << "} accuracy is " << s << "%" << std::endl;
             if (s > score) {
                 score = s;
                 best_it = it;
@@ -98,7 +103,14 @@ void backward_elimination(const Problem& p, double initial_score){
             break;
         }
         best_score = score;
-        selected.erase(best_it);
+        remain = selected;
+        remain.erase(best_it);
+        selected = remain;
+
+
+        std::cout << "Feature set ";
+        print_features(selected);
+        std::cout << " was best, accuracy is " << best_score << "%" << std::endl;
         
     }
     std::cout << "Finished search!! The best feature subset is ";
