@@ -25,7 +25,13 @@ int main(){
     std::cin >> choice;
 
     std::vector<int> empty_set;
-    double initial_score = evaluate(empty_set, 0); 
+    double initial_score = evaluate(empty_set, 0);
+
+    
+    std::vector<int> full_set;
+    for (int i = 0; i < feature_num; ++i)
+        full_set.push_back(i+1);
+    double initial_score_full = evaluate(full_set, 0);
 
     switch (choice) {
         case 1:
@@ -35,10 +41,10 @@ int main(){
             forward_selection(p, initial_score);
             break;
         case 2:
-            std::cout << "\nUsing all " << feature_num << " features and \"random\" evaluation, I get an accuracy of " << initial_score << "%" << std::endl;
+            std::cout << "\nUsing all " << feature_num << " features and \"random\" evaluation, I get an accuracy of " << initial_score_full << "%" << std::endl;
             std::cout << "\n--- Running Backward Elimination ---" << std::endl;
             std::cout << "Beginning search." << std::endl;
-            backward_elimination(p, initial_score);
+            backward_elimination(p, initial_score_full);
             break;
         case 3:
             std::cout << "Not yet implemented." << std::endl;

@@ -77,7 +77,6 @@ void backward_elimination(const Problem& p, double initial_score){
     for(int i=1; i<p.get()+1; ++i){
         selected.push_back(i);
     }
-    best_score = evaluate(selected, 0);
     
     while(selected.size() > 0) {
         for (const auto& x : selected) {
@@ -87,16 +86,17 @@ void backward_elimination(const Problem& p, double initial_score){
         best_it = selected.begin();
         score = 0;
         for(auto it = selected.begin(); it != selected.end(); ++it) {
-            //can have the evaluate function erase feature if negative
+            //can have the evaluate function erase feature if negative since it technically copies the vector then
             double s = evaluate(selected, -(*it));
             if (s > score) {
                 score = s;
                 best_it = it;
             }
         }
-        if (score < best_score)
+        if (score < best_score) {
             std::cout << "(Warning, Accuracy has decreased!)" << std::endl;
             break;
+        }
         best_score = score;
         selected.erase(best_it);
         
