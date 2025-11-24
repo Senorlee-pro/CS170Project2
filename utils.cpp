@@ -16,6 +16,39 @@ double evaluate(std::vector<int> cur_features, int new_feature){
     return num;
 }
 
+void backward_elimination(const Problem& p) {
+    std::vector<int> selected;
+    std::vector<int>::iterator best_it;
+    double score = 0;
+    double best_score = 0;
+    for(int i=1; i<p.get()+1; ++i){
+        selected.push_back(i);
+    }
+    best_score = evaluate(selected, 0);
+    
+    while(selected.size() > 0) {
+        for (const auto& x : selected) {
+            std::cout << x << " ";
+        }
+        std::cout << std::endl;
+        best_it = selected.begin();
+        score = 0;
+        for(auto it = selected.begin(); it != selected.end(); ++it) {
+            //can have the evaluate function erase feature if negative
+            double s = evaluate(selected, -(*it));
+            if (s > score) {
+                score = s;
+                best_it = it;
+            }
+        }
+        if (score < best_score)
+            return;
+        best_score = score;
+        selected.erase(best_it);
+        
+    }
+}
+
 void forward_selection(const Problem& p){
     std::vector<int> remain, selected;
     std::vector<int>::iterator best_it;
