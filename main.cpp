@@ -47,6 +47,5 @@ int main(){
             std::cout << "Invalid choice." << std::endl;
             break;
     }
-
     return 0;
 }
