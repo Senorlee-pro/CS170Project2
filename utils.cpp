@@ -79,10 +79,13 @@ void backward_elimination(const Problem& p, double initial_score){
     }
     remain = selected;
     while(selected.size() > 0) {
-        best_it = remain.begin();
+        best_it = selected.begin();
         score = 0;
-        for(auto it = remain.begin(); it != remain.end(); ++it) {
+        // for(auto it = remain.begin(); it != remain.end(); ++it) {
+        for(size_t idx = 0; idx < selected.size(); ++idx){
             remain = selected;
+            auto it = remain.begin() + idx;
+            int removed_feature = *it;
             remain.erase(it);
             double s = evaluate(remain, 0);
             std::cout << "Using feature(s) {";
@@ -95,7 +98,7 @@ void backward_elimination(const Problem& p, double initial_score){
             std::cout << "} accuracy is " << s << "%" << std::endl;
             if (s > score) {
                 score = s;
-                best_it = it;
+                best_it = selected.begin() + idx;
             }
         }
         if (score < best_score) {
@@ -103,9 +106,9 @@ void backward_elimination(const Problem& p, double initial_score){
             break;
         }
         best_score = score;
-        remain = selected;
-        remain.erase(best_it);
-        selected = remain;
+        // remain = selected;
+        selected.erase(best_it);
+        // selected = remain;
 
 
         std::cout << "Feature set ";
