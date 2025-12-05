@@ -45,3 +45,34 @@ public:
         return saved_labels[nearest_idx];
     }
 };
+
+
+class Validator{
+    public:
+        double val_accuracy (const vector<int>& subset, Classifier& classifier, const vector<vector<double>>& features, const vector<int>& labels) {
+            vector<vector<double>> subfeatures(features.size(), vector<double>(subset.size()));
+
+            int col;
+            for (int i = 0; i < features.size(); i++) {
+                for (int j = 0; j < subset.size(); j++) {
+                    subfeatures[i][j] = features[i][subset[j]-1];
+                }
+            }
+
+            vector<vector<double>> test_features;
+            vector<int> test_labels;
+            int correct = 0;
+            for (int i = 0; i < subfeatures.size(); i++) {
+                test_features = subfeatures;
+                test_features.erase(test_features.begin() + i);
+                test_labels = labels;
+                test_labels.erase(test_labels.begin() + i);
+
+                classifier.train(test_features, test_labels);
+                if (labels[i]==classifier.test(subfeatures[i])) {
+                    correct++;
+                }
+            }
+            return (double)correct / features.size();
+        }
+};
