@@ -1,4 +1,4 @@
-#include "class.h"
+#include "part1_class.h"
 #include <iostream>
 #include <vector>
 #include <iomanip>
