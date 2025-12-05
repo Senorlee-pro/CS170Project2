@@ -4,6 +4,8 @@
 #include <vector>
 using namespace std;
 
+void normalization(vector<vector<double>>& X);
+
 // Need to include ".txt" as the suffix in "filename"
 // Create empty labels and features beforehand and pass them as the arguments
 void read(string filename, vector<int>& labels, vector<vector<double>>& features){
@@ -35,6 +37,5 @@ void read(string filename, vector<int>& labels, vector<vector<double>>& features
 
     fin.close();
 
-    cout << "Loaded " << features.size() << " samples\n";
-    cout << "Each sample has " << features[0].size() << " features\n";
+    normalization(features);
 }

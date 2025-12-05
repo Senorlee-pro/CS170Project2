@@ -5,19 +5,7 @@
 
 using namespace std;
 
-double euclidean(const vector<double>& a, const vector<double>& b){
-    if(a.size() != b.size())
-        throw runtime_error("Invalid: Dimension mismatch");
-
-    else{
-        double sum = 0.0;
-        for (size_t i = 0; i < a.size(); i++){
-            double diff = a[i] - b[i];
-            sum += diff * diff;
-        }
-        return sqrt(sum);
-    }
-}
+double euclidean(const vector<double>& a, const vector<double>& b);
 
 class Classifier{
 private:
