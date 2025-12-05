@@ -23,10 +23,16 @@ int main(){
     //testing
     Classifier cf;
     Validator val;
-    cout << "Accuracy of small-test-dataset with features 3, 5, 7: " << val.val_accuracy({3, 5, 7}, cf, features, labels) << endl;
+    double acc = 0;
+
+    cout << "Running on small-test-dataset with features 3, 5, 7: " << endl;
+    acc = val.val_accuracy({3, 5, 7}, cf, features, labels);
+    cout << "Accuracy: " << acc << endl;
     labels.clear();
     features.clear();
     read("large-test-dataset-2.txt", labels, features);
-    cout << "Accuracy of large-test-dataset with features 1, 15, 27: " << val.val_accuracy({1, 15, 27}, cf, features, labels) << endl;
+    cout << "Running on large-test-dataset with features 1, 15, 27: " << endl;
+    acc = val.val_accuracy({1, 15, 27}, cf, features, labels);
+    cout << "Accuracy: " << acc << endl;
 
 }
