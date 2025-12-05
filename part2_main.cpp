@@ -24,6 +24,8 @@ int main(){
     Classifier cf;
     Validator val;
     cout << "Accuracy of small-test-dataset with features 3, 5, 7: " << val.val_accuracy({3, 5, 7}, cf, features, labels) << endl;
+    labels.clear();
+    features.clear();
     read("large-test-dataset-2.txt", labels, features);
     cout << "Accuracy of large-test-dataset with features 1, 15, 27: " << val.val_accuracy({1, 15, 27}, cf, features, labels) << endl;
 
