@@ -1,4 +1,5 @@
 #include "part1_class.h"
+#include "part2_class.h"
 #include <random>
 #include <vector>
 #include <iostream>
@@ -6,9 +7,8 @@
 #include <algorithm>
 #include <iomanip>
 
-// Initialize the random seed engine
-std::mt19937 rng(std::chrono::high_resolution_clock::now().time_since_epoch().count());
-std::uniform_real_distribution<double> dist(30.0, 80.0);
+extern std::vector<std::vector<double>> global_features;
+extern std::vector<int> global_labels;
 
 // Helper function to print features in format {1,2,3,4}
 void print_features(const std::vector<int>& features) {
@@ -25,9 +25,19 @@ void print_features(const std::vector<int>& features) {
 // Return the evaluation score of adding a new feature to current features
 // In this case the function only returns a random number
 double evaluate(std::vector<int> cur_features, int new_feature){
-    double num = dist(rng);
-    num = std::round(num * 10.0) / 10.0;
-    return num;
+    std::vector<int> subset = cur_features;
+    if (new_feature != 0) {
+        subset.push_back(new_feature);
+    }
+
+    if (subset.empty()) return 0.0;
+
+    Classifier classifier;
+    Validator validator;
+    
+    double accuracy = validator.val_accuracy(subset, classifier, global_features, global_labels);
+    
+    return accuracy * 100.0;
 }
 
 void forward_selection(const Problem& p, double initial_score){
@@ -120,4 +130,3 @@ void backward_elimination(const Problem& p, double initial_score){
     print_features(selected);
     std::cout << ", which has an accuracy of " << best_score << "%" << std::endl;
 }
-
