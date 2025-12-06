@@ -2,9 +2,33 @@
 #include <fstream>
 #include <sstream>
 #include <vector>
+#include <cmath>
 using namespace std;
 
-void normalization(vector<vector<double>>& X);
+// Z-score normalization
+void normalization(vector<vector<double>>& X) {
+    int n = X.size();
+    int m = X[0].size();
+    vector<double> mean(m, 0.0);
+    vector<double> stddev(m, 0.0);
+
+    for(int j = 0; j < m; j++){
+        for(int i = 0; i < n; i++){
+            mean[j] += X[i][j];
+        }
+        mean[j] /= n;
+        for(int i = 0; i < n; i++){
+            double diff = X[i][j] - mean[j];
+            stddev[j] += diff * diff;
+        }
+        stddev[j] = sqrt(stddev[j] / n);
+    }
+    for(int i = 0; i < n; i++){
+        for(int j = 0; j < m; j++){
+            X[i][j] = (X[i][j] - mean[j]) / stddev[j];
+        }
+    }
+}
 
 // Need to include ".txt" as the suffix in "filename"
 // Create empty labels and features beforehand and pass them as the arguments

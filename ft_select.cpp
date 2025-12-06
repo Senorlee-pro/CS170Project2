@@ -1,5 +1,5 @@
-#include "part1_class.h"
-#include "part2_class.h"
+#include "Problem.h"
+#include "kNN.h"
 #include <random>
 #include <vector>
 #include <iostream>
@@ -35,7 +35,8 @@ double evaluate(std::vector<int> cur_features, int new_feature){
     Classifier classifier;
     Validator validator;
     
-    double accuracy = validator.val_accuracy(subset, classifier, global_features, global_labels);
+    double accuracy = validator.val_accuracy(subset, classifier, 
+        global_features, global_labels);
     
     return accuracy * 100.0;
 }
