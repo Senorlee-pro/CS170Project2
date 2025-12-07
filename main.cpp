@@ -2,14 +2,13 @@
 #include <vector>
 #include <string>
 #include <algorithm>
-#include "Problem.h"
 
 using namespace std;
 
 void read(string filename, vector<int>& labels, vector<vector<double>>& features);
-void forward_selection(const Problem& p, double initial_score);
-void backward_elimination(const Problem& p, double initial_score);
-double evaluate(vector<int> cur_features, int new_feature);
+void forward_selection(int feature_num, double initial_score);
+void backward_elimination(int feature_num, double initial_score);
+double evaluate(const vector<int>& cur_features, int new_feature);
 
 vector<vector<double>> global_features;
 vector<int> global_labels;
@@ -43,8 +42,6 @@ int main() {
 
     cout << "This dataset has " << feature_num << " features (not including the class attribute), with " << instance_num << " instances." << endl;
 
-    Problem p(feature_num);
-
     cout << "\nType the number of the algorithm you want to run." << endl;
     cout << "1) Forward Selection" << endl;
     cout << "2) Backward Elimination" << endl;
@@ -53,11 +50,11 @@ int main() {
     if (choice == 1) {
         double initial_accuracy = max(label_1, label_2) / global_labels.size() * 100.0;
         cout << "Running nearest neighbor with no features (default rate), using leaving-one-out evaluation, I get an accuracy of " << initial_accuracy << "%" << endl;
-        forward_selection(p, initial_accuracy);
+        forward_selection(feature_num, initial_accuracy);
     } else if (choice == 2) {
         double initial_accuracy = evaluate(all_features, 0);
         cout << "Running nearest neighbor with all features, using leaving-one-out evaluation, I get an accuracy of " << initial_accuracy << "%" << endl;
-        backward_elimination(p, initial_accuracy);
+        backward_elimination(feature_num, initial_accuracy);
     } else {
         cout << "Invalid choice." << endl;
     }

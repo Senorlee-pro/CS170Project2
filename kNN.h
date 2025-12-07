@@ -22,10 +22,10 @@ double euclidean(const vector<double>& a, const vector<double>& b){
 }
 
 class Classifier{
-public:
+private:
     vector<vector<double>> saved_features;
     vector<int> saved_labels;
-    
+public:
     void train(const vector<vector<double>>& features, const vector<int>& labels){
         saved_features = features;
         saved_labels = labels;

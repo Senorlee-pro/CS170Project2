@@ -1,4 +1,3 @@
-#include "Problem.h"
 #include "kNN.h"
 #include <random>
 #include <vector>
@@ -24,7 +23,7 @@ void print_features(const std::vector<int>& features) {
 
 // Return the evaluation score of adding a new feature to current features
 // In this case the function only returns a random number
-double evaluate(std::vector<int> cur_features, int new_feature){
+double evaluate(const std::vector<int>& cur_features, int new_feature){
     std::vector<int> subset = cur_features;
     if (new_feature != 0) {
         subset.push_back(new_feature);
@@ -41,10 +40,10 @@ double evaluate(std::vector<int> cur_features, int new_feature){
     return accuracy * 100.0;
 }
 
-void forward_selection(const Problem& p, double initial_score){
+void forward_selection(int feature_num, double initial_score){
     std::vector<int> remain, selected;
     double best_score = initial_score;
-    for(int i=1; i<p.get()+1; ++i){
+    for(int i=1; i<feature_num+1; ++i){
         remain.push_back(i);
     }
     while(!remain.empty()){
@@ -80,12 +79,12 @@ void forward_selection(const Problem& p, double initial_score){
     std::cout << ", which has an accuracy of " << best_score << "%" << std::endl;
 }
 
-void backward_elimination(const Problem& p, double initial_score){
+void backward_elimination(int feature_num, double initial_score){
     std::vector<int> selected, remain;
     std::vector<int>::iterator best_it;
     double score = 0;
     double best_score = initial_score;
-    for(int i=1; i<p.get()+1; ++i){
+    for(int i=1; i<feature_num+1; ++i){
         selected.push_back(i);
     }
     remain = selected;
