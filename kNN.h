@@ -53,11 +53,13 @@ class Validator{
     public:
         double val_accuracy (const vector<int>& subset, Classifier& classifier, 
             const vector<vector<double>>& features, const vector<int>& labels) {
-            auto start = chrono::high_resolution_clock::now();
-            vector<vector<double>> subfeatures(features.size(), vector<double>(subset.size()));
+            // auto start = chrono::high_resolution_clock::now();
+            int N = features.size();
+            int M = subset.size();
+            vector<vector<double>> subfeatures(N, vector<double>(M));
 
-            for (int i = 0; i < features.size(); i++) {
-                for (int j = 0; j < subset.size(); j++) {
+            for (int i = 0; i < N; i++) {
+                for (int j = 0; j < M; j++) {
                     subfeatures[i][j] = features[i][subset[j]-1];
                 }
             }
@@ -76,10 +78,10 @@ class Validator{
                     correct++;
                 }
             }
-            auto end = chrono::high_resolution_clock::now();
-            chrono::duration<double> duration = end - start;
-            cout << "Validation runtime: " << setprecision(8) << duration.count() << " seconds" << endl;
+            // auto end = chrono::high_resolution_clock::now();
+            // chrono::duration<double> duration = end - start;
+            // cout << "Validation runtime: " << setprecision(8) << duration.count() << " seconds" << endl;
 
-            return (double)correct / features.size();
+            return (double)correct / N;
         }
 };
