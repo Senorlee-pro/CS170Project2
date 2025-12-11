@@ -48,8 +48,7 @@ int main() {
     cin >> choice;
 
     if (choice == 1) {
-        // double initial_accuracy = (double)max(label_1, label_2) / global_labels.size() * 100.0;
-        double initial_accuracy = 50;
+        double initial_accuracy = (double)max(label_1, label_2) / global_labels.size() * 100.0;
         cout << "Running nearest neighbor with no features (default rate), using leaving-one-out evaluation, I get an accuracy of " << initial_accuracy << "%" << endl;
         forward_selection(feature_num, initial_accuracy);
     } else if (choice == 2) {

@@ -61,7 +61,7 @@ void forward_selection(int feature_num, double initial_score){
             }
         }
 
-        if (score <= best_score){
+        if (score < best_score){
             std::cout << "(Warning, Accuracy has decreased!)" << std::endl;
             break;
         }
